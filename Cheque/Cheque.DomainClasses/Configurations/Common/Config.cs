@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cheque.DataLayer
+namespace Cheque.DomainClasses.Configurations.Common
 {
-    public class Class1
+    public abstract class Config
     {
     }
 }
