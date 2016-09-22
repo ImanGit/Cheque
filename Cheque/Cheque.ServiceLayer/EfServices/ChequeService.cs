@@ -1,48 +1,77 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using Cheque.DataLayer.Context;
 using Cheque.ServiceLayer.Contracts;
+using Cheque.ViewModel.Models;
 
 namespace Cheque.ServiceLayer.EfServices
 {
-    public class ChequeService:IChequeService
+    /// <summary>
+    /// </summary>
+    public class ChequeService : IChequeService
     {
-        #region Fields
-
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IDbSet<DomainClasses.Entities.Cheque> _cheque;
-
-        #endregion
-
         #region Ctor
 
-        public ChequeService(IUnitOfWork unitOfWork)
+        /// <summary>
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="mapper"></param>
+        public ChequeService(IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
             _cheque = unitOfWork.Set<DomainClasses.Entities.Cheque>();
         }
+
         #endregion
+
         #region Create
 
+        /// <summary>
+        /// </summary>
+        /// <param name="model"></param>
         public void Create(DomainClasses.Entities.Cheque model)
         {
             _cheque.Add(model);
             _unitOfWork.SaveAllChanges();
         }
+
+        #endregion
+
+        #region Fields
+
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDbSet<DomainClasses.Entities.Cheque> _cheque;
+
         #endregion
 
         #region Read
-        public IList<DomainClasses.Entities.Cheque> GetList()
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ChequeViewModel> GetList()
         {
-            return _cheque
+            IEnumerable<DomainClasses.Entities.Cheque> cheque = _cheque
                 .AsNoTracking()
                 .ToList();
+            return _mapper.Map<IEnumerable<DomainClasses.Entities.Cheque>, IEnumerable<ChequeViewModel>>(cheque);
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DomainClasses.Entities.Cheque GetForEdit(Guid id)
+        {
+            return _cheque
+                .FirstOrDefault(s => s.Id == id);
+        }
+
         #endregion
 
         #region Update

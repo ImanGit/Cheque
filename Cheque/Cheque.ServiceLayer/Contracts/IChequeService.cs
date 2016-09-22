@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cheque.ServiceLayer.Contracts.Common;
+using Cheque.ViewModel.Models;
 
 namespace Cheque.ServiceLayer.Contracts
 {
-    public interface IChequeService
+    /// <summary>
+    /// </summary>
+    public interface IChequeService : IBaseService
     {
+        /// <summary>
+        /// </summary>
+        /// <param name="model"></param>
         void Create(DomainClasses.Entities.Cheque model);
 
-        IList<DomainClasses.Entities.Cheque> GetList();
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ChequeViewModel> GetList();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        DomainClasses.Entities.Cheque GetForEdit(Guid id);
     }
 }

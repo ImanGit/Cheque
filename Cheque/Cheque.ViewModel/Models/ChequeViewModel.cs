@@ -1,11 +1,22 @@
 ﻿using System;
-using Cheque.DomainClasses.Entities.Common;
 
-namespace Cheque.DomainClasses.Entities
+namespace Cheque.ViewModel.Models
 {
-    public class Cheque : BaseEntity
+    /// <summary>
+    /// </summary>
+    public class ChequeViewModel
     {
         #region Properties
+
+        /// <summary>
+        ///     شناسه یکتای موجودیت
+        /// </summary>
+        public virtual Guid Id { get; set; }
+
+        /// <summary>
+        ///     gets or sets date that this entity was created
+        /// </summary>
+        public virtual string CreatedOn { get; set; }
 
         /// <summary>
         ///     کد شعبه
@@ -25,7 +36,7 @@ namespace Cheque.DomainClasses.Entities
         /// <summary>
         ///     تاریخ چک
         /// </summary>
-        public virtual DateTime ReceivedOn { get; set; }
+        public virtual string ReceivedOn { get; set; }
 
         /// <summary>
         ///     مبلغ چک
@@ -55,7 +66,7 @@ namespace Cheque.DomainClasses.Entities
         /// <summary>
         ///     تاریخ واگذاری
         /// </summary>
-        public virtual DateTime AssignmentedOn { get; set; }
+        public virtual string AssignmentedOn { get; set; }
 
         /// <summary>
         ///     نام واگذار کننده
@@ -65,27 +76,27 @@ namespace Cheque.DomainClasses.Entities
         /// <summary>
         ///     تاریخ وصول
         /// </summary>
-        public virtual DateTime ReceiptedOn { get; set; }
+        public virtual string ReceiptedOn { get; set; }
 
         /// <summary>
         ///     تاریخ عودت
         /// </summary>
-        public virtual DateTime DeliveredOn { get; set; }
+        public virtual string DeliveredOn { get; set; }
 
         /// <summary>
         ///     تاریخ برگشت
         /// </summary>
-        public virtual DateTime ReturnedOn { get; set; }
+        public virtual string ReturnedOn { get; set; }
 
         /// <summary>
         ///     تاریخ تسویه برگشتی
         /// </summary>
-        public virtual DateTime SettlementedOn { get; set; }
+        public virtual string SettlementedOn { get; set; }
 
         /// <summary>
         ///     مدت تسویه برگشتی (روز) ها
         /// </summary>
-        public virtual DateTime SettlementDay { get; set; }
+        public virtual string SettlementDay { get; set; }
 
         /// <summary>
         ///     خرج شده به
@@ -97,27 +108,12 @@ namespace Cheque.DomainClasses.Entities
         #region NavigationProperties
 
         /// <summary>
-        ///     بانک
-        /// </summary>
-        public virtual Bank Bank { get; set; }
-
-        /// <summary>
         /// </summary>
         public virtual Guid BankId { get; set; }
 
         /// <summary>
-        ///     شهر
-        /// </summary>
-        public virtual City City { get; set; }
-
-        /// <summary>
         /// </summary>
         public virtual Guid CityId { get; set; }
-
-        /// <summary>
-        ///     وضعیت
-        /// </summary>
-        public virtual Status Status { get; set; }
 
         /// <summary>
         /// </summary>

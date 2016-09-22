@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cheque.DomainClasses.Configurations.Common
+﻿namespace Cheque.DomainClasses.Configurations.Common
 {
+    /// <summary>
+    /// </summary>
     public abstract class Config
     {
     }

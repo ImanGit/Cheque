@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using AutoMapper;
 using Cheque.Common.DependencyResolution.Registeries;
 using Cheque.DataLayer.Context;
 using StructureMap;
@@ -36,15 +37,27 @@ namespace Cheque.Common.DependencyResolution
                 ioc.For<IStructureMapFormFactory>().Use<StructureMapFormFactory>();
 
                 ioc.AddRegistry<ServiceLayerRegistery>();
+                ioc.AddRegistry<AutoMapperRegistery>();
 
                 ioc.Scan(scanner => { scanner.WithDefaultConventions(); });
             });
 
             container.AssertConfigurationIsValid();
 
+            ConfigureAutoMapper(container);
+
             return container;
         }
 
         #endregion
+
+        /// <summary>
+        /// </summary>
+        /// <param name="container"></param>
+        private static void ConfigureAutoMapper(IContainer container)
+        {
+            // Exception - unmapped member
+            container.GetInstance<IMapper>().ConfigurationProvider.AssertConfigurationIsValid();
+        }
     }
 }

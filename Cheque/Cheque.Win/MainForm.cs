@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Cheque.Win.View;
+using DevExpress.XtraEditors;
 
 namespace Cheque.Win
 {
-    public partial class MainForm : Form
+    /// <summary>
+    /// </summary>
+    public partial class MainForm : XtraForm
     {
+        /// <summary>
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
+
+            var chequeView = new ChequeView {Dock = DockStyle.Fill};
+            Controls.Add(chequeView);
         }
     }
 }

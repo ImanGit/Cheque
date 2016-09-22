@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cheque.DomainClasses.Entities.Common
 {
-    public abstract class BaseEntity:Entity
+    /// <summary>
+    /// </summary>
+    public abstract class BaseEntity : Entity
     {
         #region Properties
 

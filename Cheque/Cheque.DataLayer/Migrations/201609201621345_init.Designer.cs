@@ -13,7 +13,7 @@ namespace Cheque.DataLayer.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201609161747494_init"; }
+            get { return "201609201621345_init"; }
         }
         
         string IMigrationMetadata.Source

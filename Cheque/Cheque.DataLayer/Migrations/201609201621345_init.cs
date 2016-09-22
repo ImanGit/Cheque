@@ -40,12 +40,16 @@ namespace Cheque.DataLayer.Migrations
                         Cheque_CostValue = c.Int(nullable: false),
                         Cheque_CodeNumber = c.String(),
                         Cheque_SerialNumber = c.String(),
-                        Cheque_AssignmentOn = c.DateTime(nullable: false),
+                        Cheque_CustomerName = c.String(),
+                        Cheque_TrackingNumber = c.String(),
+                        Cheque_AssignmentedOn = c.DateTime(nullable: false),
                         Cheque_AssignorName = c.String(),
-                        Cheque_ReceiptOn = c.DateTime(nullable: false),
-                        Cheque_ReturnOn = c.DateTime(nullable: false),
-                        Cheque_SettlementOn = c.DateTime(nullable: false),
+                        Cheque_ReceiptedOn = c.DateTime(nullable: false),
+                        Cheque_DeliveredOn = c.DateTime(nullable: false),
+                        Cheque_ReturnedOn = c.DateTime(nullable: false),
+                        Cheque_SettlementedOn = c.DateTime(nullable: false),
                         Cheque_SettlementDay = c.DateTime(nullable: false),
+                        Cheque_SpentTo = c.String(),
                         Cheque_BankId = c.Guid(nullable: false),
                         Cheque_CityId = c.Guid(nullable: false),
                         Cheque_StatusId = c.Guid(nullable: false),
@@ -112,7 +116,6 @@ namespace Cheque.DataLayer.Migrations
                 .PrimaryKey(t => t.Status_Id);
             
         }
-        
         public override void Down()
         {
             DropForeignKey("dbo.CM_Cheques", "Cheque_StatusId", "dbo.CM_Status");

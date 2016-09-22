@@ -9,11 +9,10 @@ namespace Cheque.DomainClasses.Entities.Common
     public abstract class Entity
     {
         #region Properties
-
         /// <summary>
         ///     gets or sets date that this entity was created
         /// </summary>
-        public virtual DateTime? CreatedOn { get; set; }
+        public virtual DateTime CreatedOn { get; set; }
 
         /// <summary>
         ///     gets or sets Date that this entity was updated
