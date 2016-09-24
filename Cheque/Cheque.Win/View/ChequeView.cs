@@ -2,7 +2,9 @@
 using System.Windows.Forms;
 using Cheque.DataLayer.Context;
 using Cheque.ServiceLayer.Contracts;
+using Cheque.ViewModel.Models;
 using Cheque.Win.Start;
+using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -39,25 +41,25 @@ namespace Cheque.Win.View
         {
             gridCheque.DataSource = _chequeService.GetList();
 
-            repositoryItemGridLookUpEdit1.DataSource = _bankService.FillBankLookup();
-            repositoryItemGridLookUpEdit1.PopulateViewColumns();
-            repositoryItemGridLookUpEdit1.View.Columns["Id"].Visible = false;
-            repositoryItemGridLookUpEdit1.View.Columns["CustomeCode"].Caption = "کد";
-            repositoryItemGridLookUpEdit1.View.Columns["Title"].Caption = "عنوان";
-            BankId.ColumnEdit = repositoryItemGridLookUpEdit1;
+            lookupBank.DataSource = _bankService.FillBankLookup();
+            lookupBank.PopulateViewColumns();
+            lookupBank.View.Columns["Id"].Visible = false;
+            lookupBank.View.Columns["CustomeCode"].Caption = "کد";
+            lookupBank.View.Columns["Title"].Caption = "عنوان";
+            BankId.ColumnEdit = lookupBank;
 
-            repositoryItemGridLookUpEdit2.DataSource = _cityService.FillCityLookup();
-            repositoryItemGridLookUpEdit2.PopulateViewColumns();
-            repositoryItemGridLookUpEdit2.View.Columns["Id"].Visible = false;
-            repositoryItemGridLookUpEdit2.View.Columns["CustomeCode"].Caption = "کد";
-            repositoryItemGridLookUpEdit2.View.Columns["Title"].Caption = "عنوان";
-            CityId.ColumnEdit = repositoryItemGridLookUpEdit2;
+            lookupCity.DataSource = _cityService.FillCityLookup();
+            lookupCity.PopulateViewColumns();
+            lookupCity.View.Columns["Id"].Visible = false;
+            lookupCity.View.Columns["CustomeCode"].Caption = "کد";
+            lookupCity.View.Columns["Title"].Caption = "عنوان";
+            CityId.ColumnEdit = lookupCity;
 
-            repositoryItemGridLookUpEdit3.DataSource = _statusService.FillStatusLookup();
-            repositoryItemGridLookUpEdit3.PopulateViewColumns();
-            repositoryItemGridLookUpEdit3.View.Columns["Id"].Visible = false;
-            repositoryItemGridLookUpEdit3.View.Columns["Title"].Caption = "عنوان";
-            StatusId.ColumnEdit = repositoryItemGridLookUpEdit3;
+            lookupStatus.DataSource = _statusService.FillStatusLookup();
+            lookupStatus.PopulateViewColumns();
+            lookupStatus.View.Columns["Id"].Visible = false;
+            lookupStatus.View.Columns["Title"].Caption = "عنوان";
+            StatusId.ColumnEdit = lookupStatus;
         }
 
         #endregion
@@ -70,21 +72,18 @@ namespace Cheque.Win.View
         /// <param name="e"></param>
         private void gridCheque_RowUpdated(object sender, RowObjectEventArgs e)
         {
-            var cheque = _chequeService.GetForEdit(((DomainClasses.Entities.Cheque) e.Row).Id);
-
-            if (cheque == null)
-            {
-                _chequeService.Create((DomainClasses.Entities.Cheque) e.Row);
-                _unitOfWork.SaveAllChanges();
+            if (e.Row == null){
+                _chequeService.Create((ChequeViewModel)e.Row);
                 MessageBox.Show("با موفقیت ذخیره شد");
-                return;
+               }
+            else
+            {
+                // var chequeViewModel = _chequeService.GetForEdit(((ChequeViewModel) e.Row).Id);
+                _chequeService.Edit((ChequeViewModel)e.Row);
+                MessageBox.Show("با موفقیت ویرایش شد");
             }
 
-            cheque.BranchCode = ((DomainClasses.Entities.Cheque) e.Row).BranchCode;
-            cheque.AccountOwner = ((DomainClasses.Entities.Cheque) e.Row).AccountOwner;
-            cheque.BankId = ((DomainClasses.Entities.Cheque) e.Row).BankId;
-            _unitOfWork.SaveAllChanges();
-            MessageBox.Show("با موفقیت ایجاد شد");
+            
         }
 
         #endregion
@@ -97,6 +96,34 @@ namespace Cheque.Win.View
         /// <param name="e"></param>
         private void gridCheque_InitNewRow(object sender, InitNewRowEventArgs e)
         {
+            var gridView = sender as GridView;
+            gridView?.SetRowCellValue(e.RowHandle, gridView.Columns["CreatedOn"], "1395/10/10");
+        }
+
+        #endregion
+
+        #region GridChequeValidateRow
+
+        private void grid_ValidateRow(object sender, ValidateRowEventArgs e)
+        {
+            var gridView = sender as GridView;
+            if (gridView != null &&
+                (string) gridView.GetRowCellValue(e.RowHandle, gridView.Columns["CustomerName"]) == "")
+            {
+                e.Valid = false;
+
+                ((GridView) sender).SetColumnError(((GridView) sender).Columns["CustomerName"],
+                    "فیلد نباید خالی باشد");
+            }
+        }
+
+        #endregion
+
+        #region GridChequeInvalidRowException
+
+        private void grid_InvalidRowException(object sender, InvalidRowExceptionEventArgs e)
+        {
+            e.ExceptionMode = ExceptionMode.NoAction;
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using AutoMapper;
 using Cheque.DataLayer.Context;
+using Cheque.Mapping.Extensions;
 using Cheque.ServiceLayer.Contracts;
 using Cheque.ViewModel.Models;
 
@@ -33,9 +34,10 @@ namespace Cheque.ServiceLayer.EfServices
         /// <summary>
         /// </summary>
         /// <param name="model"></param>
-        public void Create(DomainClasses.Entities.Cheque model)
+        public void Create(ChequeViewModel model)
         {
-            _cheque.Add(model);
+            var m= _mapper.Map<ChequeViewModel, DomainClasses.Entities.Cheque>(model);
+            _cheque.Add(m);
             _unitOfWork.SaveAllChanges();
         }
 
@@ -66,20 +68,26 @@ namespace Cheque.ServiceLayer.EfServices
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DomainClasses.Entities.Cheque GetForEdit(Guid id)
+        public ChequeViewModel GetForEdit(Guid id)
         {
-            return _cheque
+            DomainClasses.Entities.Cheque cheque = _cheque
                 .FirstOrDefault(s => s.Id == id);
+            return _mapper.Map<DomainClasses.Entities.Cheque, ChequeViewModel>(cheque);
         }
 
         #endregion
-
         #region Update
-
+        public void Edit(ChequeViewModel vm)
+        {
+            var cheque = _cheque.First(s => s.Id == vm.Id);
+            _mapper.Map(vm,cheque);
+            //cheque.BranchCode = vm.BranchCode;
+            //cheque.AccountOwner = vm.AccountOwner;
+            //cheque.AssignmentedOn = vm.AssignmentedOn.ToGeorgeDateTime();
+            _unitOfWork.SaveAllChanges(auditUserId: new Guid("9D2B0228-4D0D-4C23-8B49-01A698857709"));
+        }
         #endregion
-
         #region Delete
-
         #endregion
     }
 }

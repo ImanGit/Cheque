@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 
 namespace Cheque.Mapping.Extensions
 {
@@ -43,6 +44,38 @@ namespace Cheque.Mapping.Extensions
         public static string ToPersianString(this DateTime? dateTime, PersianDateTimeFormat format)
         {
             return dateTime != null ? new PersianDateTime(dateTime.Value).ToString(format) : string.Empty;
+        }
+
+        public static DateTime ToGeorgeDateTime(this string userInput)
+        {CultureInfo en = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = en;
+
+            int year = int.Parse(userInput.Substring(0, 4));
+            int month = int.Parse(userInput.Substring(5, 2));
+            int day = int.Parse(userInput.Substring(8, 2));
+            PersianCalendar p = new PersianCalendar();
+            DateTime date = p.ToDateTime(year, month, day, 0, 0, 0, 0);
+            
+            return date;
+
+            //System.String[] userDateParts = userInput.Split(new[] { "/" }, System.StringSplitOptions.None);
+            //int userYear = int.Parse(userDateParts[0]);
+            //int userMonth = int.Parse(userDateParts[1]);
+            //int userDay = int.Parse(userDateParts[2]);
+
+            //PersianCalendar pCalendar = new PersianCalendar();
+            //DateTime gDate = pCalendar.ToDateTime(userYear, userMonth, userDay, 0, 0, 0, 0);
+            //return gDate;
+
+            //  DateTime epoch = new DateTime(userYear, userMonth, userDay, new PersianCalendar());
+            //   return epoch;
+            //  PersianCalendar pc = new PersianCalendar();
+            //   pc.
+            //  return    pc.ToDateTime(userYear, userMonth, userDay, 0, 0, 0, 0);
+
+            // DateTime dt = new DateTime(userYear, userMonth, userDay, new PersianCalendar());
+            //   return pc;
+
         }
     }
 }

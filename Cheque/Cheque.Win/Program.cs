@@ -21,6 +21,7 @@ namespace Cheque.Win
             Thread.CurrentThread.CurrentCulture = new CultureInfo("fa-IR");
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
+        //    MessageBox.Show(DateTime.Now.ToString());
             BonusSkins.Register();
             SkinManager.EnableFormSkins();
             SkinManager.EnableMdiFormSkins();

@@ -12,7 +12,7 @@ namespace Cheque.ServiceLayer.Contracts
         /// <summary>
         /// </summary>
         /// <param name="model"></param>
-        void Create(DomainClasses.Entities.Cheque model);
+        void Create(ChequeViewModel model);
 
         /// <summary>
         /// </summary>
@@ -23,6 +23,8 @@ namespace Cheque.ServiceLayer.Contracts
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        DomainClasses.Entities.Cheque GetForEdit(Guid id);
+        ChequeViewModel GetForEdit(Guid id);
+
+        void Edit(ChequeViewModel vm);
     }
 }
